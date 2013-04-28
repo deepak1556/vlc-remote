@@ -1,8 +1,8 @@
 # VLC-Remote
 ============
 
-##TO-DO
-=======
+## TO-DO
+========
 
-*methods for extension
-*bindings for node and lua
+* methods for extension
+* bindings for node and lua
