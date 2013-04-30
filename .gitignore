@@ -1,1 +1,5 @@
 *.*~
+.lock-wscript
+build/c4che
+build/.wafpickle-7
+build/config.log
