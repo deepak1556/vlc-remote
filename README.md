@@ -5,4 +5,7 @@
 ========
 
 * methods for extension
-* bindings for node and lua
+* connect lua and node socket
+* UI for clients
+* dependency check script, daemon and system tray app
+* Complete RPM package
