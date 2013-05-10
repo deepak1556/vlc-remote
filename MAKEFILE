@@ -1,0 +1,59 @@
+# compiles the project listed in the PROJ macro
+#
+
+PROJ = systemtray	
+OBJS = 
+OUTPUT_ROOT = build/
+
+# Include all the source files here
+SOURCES = src/systemtray.cpp
+
+# Configuration:
+#
+CC = g++
+MD = mkdir -p
+RM = rm -rf			  	
+
+# Compiler-dependent section
+#
+%if $(CC) == g++		
+  OUT_DIR = $(OUTPUT_ROOT)
+  CFLAGS = –m$(MODEL)		 
+%else	    						     
+% abort Unsupported CC==$(CC)				     
+%endif
+
+# Settings:
+#
+OBJS = $(SOURCES:.cpp=.o)
+DIRS = $(subst /,/,$(sort $(dir $(OBJS))))
+DIR_TARGET = $(OUT_DIR)
+OUTPUT_TARGET = $(OUT_DIR)/$(PROJ)
+
+# The project to be built
+#
+all: $(PROJ)
+
+clean:
+    $(RM) -rf $(OUT_DIR)
+
+$(DIR_TARGET):
+    $(MD) -p $(DIRS)
+
+.cpp.o: 
+    @$(CC) -c $< -o $@
+
+$(OBJS): $(OUT_O_DIR)/%.o: %.cpp
+    @$(CC) -c $< -o $@
+
+$(PROJ): $(DIR_TARGET) $(OBJS)
+
+$(DIR_TARGET):
+	$(MD) -p $(DIRS)
+
+$(vlc): 
+	$(MD) ~/.local/share/vlc/extensions
+
+install: start $(vlc) src/vlc_remote.lua
+	 cp start /etc/rc.d/rc.local
+	 cp src/vlc_remote.lua $(vlc)

@@ -1,0 +1,30 @@
+# compiles the project listed in the PROJ macro
+#
+
+PROJ = systemtray			# the name of the project
+OBJS = 
+
+# Configuration:
+#
+CC = g++
+MD = mkdir
+RM = rm -rf			  	
+
+# Compiler-dependent section
+#
+%if $(CC) == g++		
+  CFLAGS = –m$(MODEL)		 
+%else	    						     
+% abort Unsupported CC==$(CC)				     
+%endif
+
+# The project to be built
+#
+all: $(PROJ)
+$(PROJ): $(PROJ).o
+	 $(CC) $(PROJ).o -o $(PROJ)
+$(PROJ).o: src/$(PROJ).cpp
+	   g++ -c src/$(PROJ).cpp
+install: start src/vlc_remote.lua
+	 cp start.sh /etc/rc.d/rc.local
+	 cp src/vlc_remote.lua  

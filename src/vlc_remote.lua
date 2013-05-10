@@ -7,13 +7,15 @@ function descriptor()
 end
 
 function activate()
-    dlg = vlc.dialog("VLC-Remote")
-    list = dlg:add_list(1, 3, 4, 1)
-    button_play = dlg:add_button("Play", click_play, 1, 4, 4, 1)
-    dlg:show()
+    local host, port = "localhost", 8081
+    local socket = require("socket")
+    local tcp = assert(socket.tcp())
+    tcp:connect(host,port)
+    tcp:send("hello world\n")
+    local val = tcp:receive()
 end
 
-function click_play()
+function action()
     selection = list:get_selection()
     if (not selection) then return 1 end
     local sel = nil
